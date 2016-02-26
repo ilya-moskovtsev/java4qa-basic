@@ -8,8 +8,13 @@ import com.db.domain.Ticker;
 import java.sql.SQLException;
 
 public class Controller {
-    private TickerDAO tickerDAO = new TickerDAO();
+    private TickerDAO tickerDAO;
     private StockDAO stockDAO;
+
+    public Controller(TickerDAO tickerDAO, StockDAO stockDAO) {
+        this.tickerDAO = tickerDAO;
+        this.stockDAO = stockDAO;
+    }
 
     public double buy(String tickerId, int amount) throws BuyOperationException, SQLException {
         final int BUY_OPERATION = 1;
