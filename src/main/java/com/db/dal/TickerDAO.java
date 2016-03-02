@@ -11,7 +11,9 @@ public class TickerDAO {
     }
 
     public void openConnection(String connection) throws SQLException {
-        if(!connection.contains("jdbc:")) throw new SQLException("Wrong connection string: " + connection);
+        if(!connection.contains("jdbc:")){
+            throw new SQLException("Wrong connection string: " + connection);
+        }
     }
 
     public void close() throws SQLException {

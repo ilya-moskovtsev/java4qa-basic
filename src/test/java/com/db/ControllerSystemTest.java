@@ -54,8 +54,6 @@ public class ControllerSystemTest {
         assert "TEST" == ticker.getTickerId();
     }
 
-
-
     @Test
     public void shouldGetTickerNotnull () throws SellOperationException,SQLException {
         Ticker ticker = new Ticker("TEST");
@@ -68,9 +66,81 @@ public class ControllerSystemTest {
         assertNull(ticker.getTickerId());
     }
 
+    @Test (expected = SQLException.class)
+    public void shouldReceiveExceptionWhenFalse () throws SQLException {
+        TickerDAO tickerDAO = new TickerDAO();
+        tickerDAO.openConnection("test");
+    }
+
+    @Test
+    public void shouldReceiveExceptionWhenToString () {
+        TickerDAO tickerDAO = new TickerDAO();
+        try {
+            tickerDAO.openConnection("test");
+        }
+        catch (SQLException e){
+            assertEquals("Wrong connection string: " + "test", e.getMessage());
+        }
+    }
+
     @Test (expected = IllegalArgumentException.class)
     public void shouldReturnIllegalArg () throws IllegalArgumentException {
         StockDAO stock = new StockDAO();
         stock.placeOrder("TEST", 1, -1);
+    }
+
+    @Test
+    public void shouldReturnIllegalArgWhenFalse () {
+        StockDAO stock = new StockDAO();
+        try {
+            stock.placeOrder("TEST", -1, -1);
+        }
+        catch (IllegalArgumentException e){
+            assertEquals("Below zero amount", e.getMessage());
+        }
+    }
+
+    @Test
+         public void shouldReturnIllegalArgWhenFalse1 () {
+        StockDAO stock = new StockDAO();
+        try {
+            stock.placeOrder("TEST", 1, -1);
+        }
+        catch (IllegalArgumentException e){
+            assertEquals("Unsupported operation " + "-1", e.getMessage());
+        }
+    }
+
+    @Test
+    public void shouldReturnIllegalArgWhenFalse2 () {
+        StockDAO stock = new StockDAO();
+        double i = 0.;
+
+            i = stock.placeOrder("TEST", 1, 1);
+
+            assertEquals(1., i, 0.01);
+
+    }
+
+    @Test
+    public void shouldReturnBuyWhen1 () {
+        StockDAO stock = new StockDAO();
+        double i = 0.;
+
+        i = stock.placeOrder("TEST", 10, 1);
+
+        assertEquals(.1, i, 0.01);
+
+    }
+
+    @Test
+    public void shouldReturnSellWhen1 () {
+        StockDAO stock = new StockDAO();
+        double i = 0.;
+
+        i = stock.placeOrder("TEST", 1, 2);
+
+        assertEquals(1, i, 0.01);
+
     }
 }

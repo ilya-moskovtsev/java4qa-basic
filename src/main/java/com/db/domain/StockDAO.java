@@ -4,7 +4,7 @@ public class StockDAO {
     public double placeOrder(String tickerId, int amount, int operation) {
         if(amount < 0) throw new IllegalArgumentException("Below zero amount");
 
-        double result = 0;
+        double result;
         switch (operation) {
             case 1: result = buy(tickerId, amount); break;
             case 2: result = sell(tickerId, amount); break;
@@ -15,12 +15,10 @@ public class StockDAO {
     }
 
     private int sell(String tickerId, int amount) {
-        int internalOptionPrice = 1/amount;
-        return internalOptionPrice;
+        return 1/amount;
     }
 
     private double buy(String tickerId, int amount) {
-        double internalOptionPrice = 1.0/amount;
-        return internalOptionPrice;
-    }
+        return 1.0/amount;
+     }
 }
